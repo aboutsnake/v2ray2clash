@@ -1,7 +1,7 @@
 # 功能
 * v2ray 订阅转 [clash](https://github.com/Dreamacro/clash)、[clashx](https://github.com/yichengchen/clashX)、[cfw](https://github.com/Fndroid/clash_for_windows_pkg/releases) 订阅
-* v2ray 订阅转 QuantumultX 订阅
-* ssr 订阅转 clashr 订阅
+* v2ray 订阅转 QuantumultX 订阅 **给喜欢圈X的提供一个[IOS捷径](https://www.icloud.com/shortcuts/1fcda0a8ec9c4b48b899d5e9c9da7816)**
+* ssr 订阅转 clashr 订阅, ssr兼容ss协议配置的订阅转clash订阅
 # 主程序:
 * macOS:    clashconfig-darwin-amd64
 * windows:  clashconfig-windows-amd64

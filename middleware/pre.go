@@ -34,10 +34,10 @@ func httpGet(url string) ([]byte, error) {
 	case <-ctx.Done():
 		return nil, ctx.Err()
 	case res := <-c:
-		defer res.r.Body.Close()
 		if res.err != nil || res.r.StatusCode != http.StatusOK {
 			return nil, err
 		}
+		defer res.r.Body.Close()
 		s, err := ioutil.ReadAll(res.r.Body)
 		return s, err
 	}

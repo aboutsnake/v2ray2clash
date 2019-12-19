@@ -20,7 +20,7 @@ import (
 
 type Vmess struct {
 	Add  string      `json:"add"`
-	Aid  int         `json:"aid"`
+	Aid  interface{} `json:"aid"`
 	Host string      `json:"host"`
 	ID   string      `json:"id"`
 	Net  string      `json:"net"`
@@ -38,7 +38,7 @@ type ClashVmess struct {
 	Server         string            `json:"server,omitempty"`
 	Port           interface{}       `json:"port,omitempty"`
 	UUID           string            `json:"uuid,omitempty"`
-	AlterID        int               `json:"alterId,omitempty"`
+	AlterID        interface{}       `json:"alterId,omitempty"`
 	Cipher         string            `json:"cipher,omitempty"`
 	TLS            bool              `json:"tls,omitempty"`
 	Network        string            `json:"network,omitempty"`
@@ -240,6 +240,19 @@ func SSR2ClashR(c *gin.Context) {
 		ssr.Protocol = params[SSRProtocol]
 		ssr.Cipher = params[SSRCipher]
 		ssr.OBFS = params[SSROBFS]
+
+		// 如果兼容ss协议，就转换为clash的ss配置
+		// https://github.com/Dreamacro/clash
+		if "origin" == ssr.Protocol && "plain" == ssr.OBFS {
+			switch ssr.Cipher {
+			case "aes-128-gcm", "aes-192-gcm", "aes-256-gcm",
+				"aes-128-cfb", "aes-192-cfb", "aes-256-cfb",
+				"aes-128-ctr", "aes-192-ctr", "aes-256-ctr",
+				"rc4-md5", "chacha20", "chacha20-ietf", "xchacha20",
+				"chacha20-ietf-poly1305", "xchacha20-ietf-poly1305":
+				ssr.Type = "ss"
+			}
+		}
 
 		suffix := strings.Split(params[SSRSuffix], "/?")
 		if 2 != len(suffix) {
